@@ -7,6 +7,7 @@ package reservation.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,39 +18,16 @@ import javax.persistence.Id;
  * @author formation
  */
 @Entity
-public class Chambre implements Serializable {
+public class Hotel implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false, name ="price")
-    private Double prix;
-    
-    @Column(nullable = false, length = 32)
+    @Column(length = 32, nullable = false)
     private String nom;
-    @Column(length = 4096)
-    private String description;
-    
-    
-
-    public double getPrix() {
-        return prix;
-    }
-
-    public void setPrix(double prix) {
-        this.prix = prix;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    
+    @Embedded
+    private Adresse adresse;
 
     public Long getId() {
         return id;
@@ -69,10 +47,10 @@ public class Chambre implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Chambre)) {
+        if (!(object instanceof Hotel)) {
             return false;
         }
-        Chambre other = (Chambre) object;
+        Hotel other = (Hotel) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -81,7 +59,7 @@ public class Chambre implements Serializable {
 
     @Override
     public String toString() {
-        return "reservation.entity.Chambre[ id=" + id + " ]";
+        return "reservation.entity.Hotel[ id=" + id + " ]";
     }
     
 }
