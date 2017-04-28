@@ -6,44 +6,28 @@
 package reservation.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author formation
  */
 @Entity
-public class Hotel implements Serializable {
+public class Article implements Serializable {
 
-   
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(length = 32, nullable = false)
-    private String nom;
-    @Embedded
-    private Adresse adresse;
-    @OneToMany(mappedBy = "hotel") //Précise la varible réciproque avec laquelle se créera la relation
-    private List<Chambre> chambres = new ArrayList<>();
-
-    public List<Chambre> getChambres() {
-        return chambres;
-    }
-
-    public void setChambres(List<Chambre> chambres) {
-        this.chambres = chambres;
-    }
     
+    @ManyToMany(mappedBy = "articles")
+    private Set<Commande> commandes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -51,21 +35,6 @@ public class Hotel implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
- public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
     }
 
     @Override
@@ -78,10 +47,10 @@ public class Hotel implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Hotel)) {
+        if (!(object instanceof Article)) {
             return false;
         }
-        Hotel other = (Hotel) object;
+        Article other = (Article) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -90,7 +59,7 @@ public class Hotel implements Serializable {
 
     @Override
     public String toString() {
-        return "reservation.entity.Hotel[ id=" + id + " ]";
+        return "reservation.entity.Article[ id=" + id + " ]";
     }
     
 }
